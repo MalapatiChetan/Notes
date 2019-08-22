@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "768238672136",
+    "firebase_url": "https://task-8a134.firebaseio.com",
+    "project_id": "task-8a134",
+    "storage_bucket": "task-8a134.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768238672136:android:f78dbd212f62680c",
+        "android_client_info": {
+          "package_name": "com.example.malapatichetan.task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "768238672136-3g1voqli8hka85md6eqsu04tvi0vkk1h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHj0cLcUuOBFOf4RsigP9Zg5xGwojZ-I0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/editdesign"
+    tools:context=".Registration">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Registration"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <EditText
+                android:id="@+id/emailReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/editdesign"
+                android:ems="10"
+                android:hint="Email:"
+                android:inputType="textEmailAddress"
+                android:padding="16dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/passwordReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/editdesign"
+                android:ems="10"
+                android:hint="Password:"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/RegBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                android:padding="16dp"
+                android:textColor="@android:color/white"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:background="@drawable/editdesign"
+                />
+
+            <TextView
+                android:id="@+id/LogInText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="7dp"
+                android:text="Already have account? LogIn here"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>
