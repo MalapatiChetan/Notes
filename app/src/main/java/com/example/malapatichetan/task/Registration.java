@@ -30,32 +30,26 @@ public class Registration extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-      //  getActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         mAuth = FirebaseAuth.getInstance();
         mDialouge = new ProgressDialog(this);
-
         email = findViewById(R.id.emailReg);
         pass = findViewById(R.id.passwordReg);
         btnReg = findViewById(R.id.RegBtn);
         loginTxt = findViewById(R.id.LogInText);
 
 
-        loginTxt.setOnClickListener(new View.OnClickListener() {
+        loginTxt.setOnClickListener(new View.OnClickListener() {                                    // Login Into App
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         });
-
-
-        btnReg.setOnClickListener(new View.OnClickListener() {
+        btnReg.setOnClickListener(new View.OnClickListener() {                                      // Registration For User
             @Override
             public void onClick(View view) {
                 String mEmail = email.getText().toString().trim();
                 String mpass = pass.getText().toString().trim();
-
                 if (TextUtils.isEmpty(mEmail)){
                     email.setError("Required Field..");
                     return;
@@ -65,33 +59,23 @@ public class Registration extends AppCompatActivity {
                     return;
                 }
 
-                mDialouge.setMessage("Processing...");
+                mDialouge.setMessage("Processing...");                                              //progress of a task like you want user to wait until the task is completed
                 mDialouge.show();
 
-                mAuth.createUserWithEmailAndPassword(mEmail,mpass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                mAuth.createUserWithEmailAndPassword(mEmail,mpass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {  //To create a new user account with a password
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if (task.isSuccessful()){
-                            Toast.makeText(getApplicationContext(),"sucessfull",Toast.LENGTH_LONG).show();
-
-                            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
-
-                            mDialouge.dismiss();
-                        }else {
-                            Toast.makeText(getApplicationContext(),"Problem",Toast.LENGTH_LONG).show();
-                            mDialouge.dismiss();
-                        }
-
+                          if (task.isSuccessful()){
+                              Toast.makeText(getApplicationContext(),"sucessfull",Toast.LENGTH_LONG).show();
+                              startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                              mDialouge.dismiss();
+                          }else {
+                              Toast.makeText(getApplicationContext(),"wrong user or password",Toast.LENGTH_LONG).show();
+                              mDialouge.dismiss();
+                          }
                     }
                 });
-
-
             }
         });
-
-
-
-
     }
 }

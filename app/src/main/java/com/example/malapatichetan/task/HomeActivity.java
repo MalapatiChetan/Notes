@@ -14,15 +14,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.TextView;
 import android.widget.Toast;
-//import android.widget.Toolbar;
 import android.support.v7.widget.Toolbar;
 
 import com.example.malapatichetan.task.Model.Data;
@@ -41,7 +37,6 @@ import java.util.HashSet;
 
 public class HomeActivity extends AppCompatActivity {
 
-
     private Toolbar toolbar;
     private FloatingActionButton fabbtn;
     private DatabaseReference mDatabase;
@@ -51,60 +46,47 @@ public class HomeActivity extends AppCompatActivity {
     private EditText noteUp;
     private Button btnDelete;
     private Button btnUpdate;
-
     private String title;
     private String note;
     private String postKey;
-   // GlideImageView glideImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        WebView mywebview = (WebView) findViewById(R.id.webView);
-        mywebview.loadUrl("https://www.google.com/");
 
-        /*glideImageView = findViewById(R.id.glideImageview);
-        glideImageView.loadImageUrl("https://www.pexels.com/photo/abandoned-forest-industry-nature-34950/");
-*/
-        toolbar = findViewById(R.id.toolbarHome);
+        toolbar = findViewById(R.id.toolbarHome);                                                   //For ToolBar
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("My Task App");
 
-        /*getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-*/
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
         String uId = mUser.getUid();
         mDatabase= FirebaseDatabase.getInstance().getReference().child("TaskNote").child(uId);
-
-
         mDatabase.keepSynced(true);
-        recyclerView = findViewById(R.id.recycler);
+
+        recyclerView = findViewById(R.id.recycler);                                                 //RecyclerView
         LinearLayoutManager LayoutManager = new LinearLayoutManager(this);
         LayoutManager.setReverseLayout(true);
         LayoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(LayoutManager);
-        fabbtn = findViewById(R.id.fabbtn);
+
+        fabbtn = findViewById(R.id.fabbtn);                                                         //Fab Button
         fabbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                AlertDialog.Builder mydialouge = new AlertDialog.Builder(HomeActivity.this);
-                LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
-               View myview = inflater.inflate(R.layout.custominputfield,null);
-                mydialouge.setView(myview);
-
-                final AlertDialog dialouge = mydialouge.create();
-
-                final EditText title = myview.findViewById(R.id.editTitle);
-                final EditText note = myview.findViewById(R.id.editNote);
-                Button btnSave = myview.findViewById(R.id.btnSave);
-                btnSave.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                 AlertDialog.Builder mydialouge = new AlertDialog.Builder(HomeActivity.this);
+                 LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
+                 View myview = inflater.inflate(R.layout.custominputfield,null);               //Inflating custominputfield Layout
+                 mydialouge.setView(myview);
+                 final AlertDialog dialouge = mydialouge.create();
+                 final EditText title = myview.findViewById(R.id.editTitle);
+                 final EditText note = myview.findViewById(R.id.editNote);
+                 Button btnSave = myview.findViewById(R.id.btnSave);
+                 btnSave.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View view) {
                         String mtitle = title.getText().toString().trim();
                         String mnote = note.getText().toString().trim();
                         if (TextUtils.isEmpty(mtitle)){
@@ -117,9 +99,7 @@ public class HomeActivity extends AppCompatActivity {
                         }
                         String id = mDatabase.push().getKey();
                         String date = DateFormat.getDateInstance().format(new Date());
-
                         Data data = new Data(mtitle,mnote,date,id);
-
                         mDatabase.child(id).setValue(data);
                         Toast.makeText(getApplicationContext(),"Data Insert",Toast.LENGTH_LONG).show();
                         dialouge.dismiss();
@@ -128,12 +108,10 @@ public class HomeActivity extends AppCompatActivity {
                 dialouge.show();
             }
         });
-
     }
     @Override
     protected void onStart() {
         super.onStart();
-
         FirebaseRecyclerAdapter<Data,MyViewHolder>adapter=new FirebaseRecyclerAdapter<Data, MyViewHolder>
                 (
                         Data.class,
@@ -141,7 +119,6 @@ public class HomeActivity extends AppCompatActivity {
                         MyViewHolder.class,
                         mDatabase
                 ) {
-
             @Override
             protected void populateViewHolder(MyViewHolder viewHolder, final Data model, final int position) {
                 viewHolder.setTitle(model.getTitle());
@@ -160,10 +137,8 @@ public class HomeActivity extends AppCompatActivity {
         };
         recyclerView.setAdapter(adapter);
     }
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         View view;
-
         public MyViewHolder(View itemView) {
             super(itemView);
             view=itemView;
@@ -181,7 +156,6 @@ public class HomeActivity extends AppCompatActivity {
             mdate.setText(date);
         }
     }
-
     public void updateData(){
         AlertDialog.Builder mydialog=new AlertDialog.Builder(HomeActivity.this);
         LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
@@ -190,27 +164,22 @@ public class HomeActivity extends AppCompatActivity {
         final AlertDialog dialog = mydialog.create();
         titleUp = myview.findViewById(R.id.editTitleUpd);
         noteUp = myview.findViewById(R.id.editNoteUpd);
-
         titleUp.setText(title);
         titleUp.setSelection(title.length());
-
         noteUp.setText(note);
         noteUp.setSelection(note.length());
-
         btnDelete = myview.findViewById(R.id.btnDeleteUpd);
         btnUpdate = myview.findViewById(R.id.btnUpdateUpd);
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 title = titleUp.getText().toString().trim();
                 note = noteUp.getText().toString().trim();
                 String mDate = DateFormat.getDateInstance().format(new Date());
                 Data data = new Data(title,note,mDate,postKey);
                 mDatabase.child(postKey).setValue(data);
                 dialog.dismiss();
-
             }
         });
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -222,72 +191,60 @@ public class HomeActivity extends AppCompatActivity {
         });
         dialog.show();
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.mainmenu,menu);
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()){
-
-            case R.id.logout:
-                AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
-                alert.setMessage("Are you sure? "+mAuth.getCurrentUser().getEmail())
-                        .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                mAuth.signOut();
-                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                            }
-                        }).setNegativeButton("Cancel", null);
-                AlertDialog alert1 = alert.create();
-                alert1.show();
-                break;
-
-            case R.id.refresh:
-                Toast.makeText(getApplicationContext(),"refreshed",Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.help:
-                AlertDialog builder = new AlertDialog.Builder(this)
-                        .setIcon(android.R.drawable.ic_menu_help)
-                        .setTitle("How is it? ").setMessage("Was this helpful?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(getApplicationContext(),"Thanks for your Feed back",Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                     case R.id.logout:
+                               AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
+                               alert.setMessage("Are you sure? "+mAuth.getCurrentUser().getEmail())
+                              .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                                     public void onClick(DialogInterface dialog, int which) {
+                                         mAuth.signOut();
+                                         startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                     }
+                              }).setNegativeButton("Cancel", null);
+                              AlertDialog alert1 = alert.create();
+                              alert1.show();
+                     break;
+                    /*case R.id.refresh:
+                              Toast.makeText(getApplicationContext(),"refreshed",Toast.LENGTH_LONG).show();
+                    break;*/
+                   /* case R.id.help:
+                              AlertDialog builder = new AlertDialog.Builder(this)
+                             .setIcon(android.R.drawable.ic_menu_help)
+                             .setTitle("How is it? ").setMessage("Was this helpful?")
+                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        Toast.makeText(getApplicationContext(),"Thanks for your Feed back",Toast.LENGTH_LONG).show();
+                                    }
+                             })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(getApplicationContext(),"We will make it better!!",Toast.LENGTH_LONG).show();
                             }
-                        })
-                        .show();
-                break;
-
-            case R.id.star:
-                Toast.makeText(getApplicationContext(),"selected",Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.delete:
-                mAuth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                           mAuth.signOut();
-                        }/*else{
-                            displayMessage(getString(R.string.user_deletion_error));
-                        }*/
-                    }
+                            })
+                           .show();
+                    break;*/
+                    /*case R.id.star:
+                            Toast.makeText(getApplicationContext(),"selected",Toast.LENGTH_LONG).show();
+                    break;*/
+                    case R.id.delete:
+                            mAuth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                mAuth.signOut();
+                            }
+                     }
                 });
-
         }
-        return super.onOptionsItemSelected(item);
+                    return super.onOptionsItemSelected(item);
     }
-
 }
